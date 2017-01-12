@@ -3,7 +3,6 @@ package net.hosain.route;
 import org.apache.camel.CamelContext;
 import org.apache.camel.api.management.mbean.ManagedRouteMBean;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 
 import static com.jayway.awaitility.Awaitility.await;
+import static java.nio.file.Files.readAllBytes;
+import static java.nio.file.Paths.get;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,6 +45,7 @@ public class HttpToFileRouteIT {
 
         //then
         assertThat(outFile.exists()).isTrue();
+        assertThat(new String(readAllBytes(get("target/output.txt")))).isEqualTo("hello\n");
     }
 
     private long getTotalExchanges() throws Exception {

@@ -10,7 +10,7 @@ public class HttpToFileRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("timer://foo?period=5000&delay=5s")
                         .id("remoteResourceRoute")
-                        .to("{{remote.host}}")
+                        .to("http://{{remote.host}}/file.txt")
                         .to("file:{{output.dir.path}}?fileName=output.txt");
     }
 }
